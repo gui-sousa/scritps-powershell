@@ -1,17 +1,18 @@
-#IP do Servidor
-$IPdestino = "10.1.80.61"
-$destino = "/root/teste-ftp/sub1"
-$origem = "./diretorio"
 
+#Endereços para envio
+$SFTPendereco = "ftp.nome.ou.ip"
+$SFTPdestino = "/pasta/destino/servidor/ftp"
+
+#Cria artefato a ser enviado em formato ZIP
+Compress-Archive -Path .\diretorio\* -DestinationPath .\artefato.zip
+$SFTParquivo = ".\artefato.zip"
 
 #Variaveis de autenticação
-$SFTPpwd = ConvertTo-SecureString "Z@33M0@2020" -AsPlainText -Force
-$SFTPcred = New-Object System.Management.Automation.PSCredential ("root", $SFTPpwd)
+$SFTPpwd = ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force
+$SFTPcred = New-Object System.Management.Automation.PSCredential ("guisousa", $SFTPpwd)
 
 #Conectando ao servidor FTP
-$sessao = New-SFTPSession -Computer $IPdestino -Credential $SFTPcred
+$sessao = New-SFTPSession -Computer $SFTPendereco -Credential $SFTPcred
 
-#Copiando arquivos para o Host FTP /root/teste-ftp/sub1
-#Set-SFTPLocation -SFTPSession $sessao -Path "/root/teste-ftp/sub1"
-Set-SFTPItem -SFTPSession $sessao -Path $origem -Destination $destino
-
+#Copiando arquivos para o Host FTP
+Set-SFTPItem -SFTPSession $sessao -Path $SFTParquivo -Destination $SFTPdestino
