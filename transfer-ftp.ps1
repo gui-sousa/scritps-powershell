@@ -1,11 +1,12 @@
 #Endereços para envio
 $SFTPendereco = "ftp.servidor.nome"
 $SFTPdestino = "."
-$SFTPorigem = "\\edeia\PROCESSADOS\*"
+$SFTPorigem = ".\diretorio"
 
 #Cria artefato a ser enviado em formato ZIP
-Compress-Archive -Path $SFTPorigem -DestinationPath .\artefato.zip
-$SFTParquivo = ".\artefato.zip"
+$timestamp = $(get-date -f dd-MM-yyyy_hh-mm-s)
+Compress-Archive -Path $SFTPorigem -DestinationPath .\artefato_$($timestamp).zip
+$SFTParquivo = ".\artefato_$timestamp.zip"
 
 #Variaveis de autenticação
 $SFTPpwd = ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force
